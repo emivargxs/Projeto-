@@ -1,0 +1,24 @@
+{
+  "name": "cestacorp-treinamentos",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Evolução de Treinamentos · Cestacorp (Projeto Service Learning PUCRS 2026/2)",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build:contracts": "npm run build -w @cestacorp/contracts",
+    "db:migrate": "npm run build:contracts && npm run db:migrate -w @cestacorp/api",
+    "db:seed": "npm run build:contracts && npm run db:seed -w @cestacorp/api",
+    "db:setup": "npm run db:migrate && npm run db:seed",
+    "dev": "npm run build:contracts && concurrently -n api,web -c blue,green \"npm run dev -w @cestacorp/api\" \"npm run dev -w @cestacorp/web\"",
+    "build": "npm run build:contracts && npm run build -w @cestacorp/api && npm run build -w @cestacorp/web",
+    "typecheck": "npm run build:contracts && npm run typecheck -w @cestacorp/api && npm run typecheck -w @cestacorp/web",
+    "lint:fronteiras": "node scripts/verificar-fronteiras.mjs"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "~5.7.3"
+  }
+}
